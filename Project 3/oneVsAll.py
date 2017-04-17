@@ -1,6 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from gradientDescent import gradientDescent
+
 
 def oneVsAll(X, y, num_labels, all_theta, alpha, iterations, flag):
     """
@@ -17,31 +18,32 @@ def oneVsAll(X, y, num_labels, all_theta, alpha, iterations, flag):
         включить или отключить визуализацию процесса сходимости градиентного 
         спуска для i-го классификатора
     """
-    
+
     J_history = []
-    
+
     for i in range(num_labels):
         print('Обучение классификатора №', i + 1)
-        
+
         # ====================== Ваш код здесь ======================
         # Инструкция: выполнить обучение нескольких классифкаторов на 
         # основе логистической регрессии для решения задачи многоклассовой 
         # классификации на основе подхода "один против всех"
-        
-        
-        
+
+        all_theta[:, i:i + 1], J_history = gradientDescent(X, (y == i).astype('uint8'), all_theta[:, i:i + 1], alpha,
+                                                           iterations)
+
         # ============================================================
-        
+
         # Визуализация процесса сходимости для i-го классифкатора
-        if flag == True:
+        if flag:
             plt.figure()
-            plt.plot(np.arange(len(J_history)) + 1, J_history, '-b', linewidth = 2)
-            plt.xlabel('Число итераций');
+            plt.plot(np.arange(len(J_history)) + 1, J_history, '-b', linewidth=2)
+            plt.xlabel('Число итераций')
             plt.ylabel('Значение стоимостной функции')
             plt.title('Классификатор № ' + str(i + 1))
             plt.grid()
             plt.show()
-        
+
         print('выполнено \n')
-    
+
     return all_theta

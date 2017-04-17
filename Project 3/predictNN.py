@@ -1,6 +1,7 @@
 import numpy as np
 from sigmoid import sigmoid
 
+
 def predictNN(X, Theta1, Theta2):
     """
         Функция позволяет выполнить предсказание метки класса p 
@@ -10,18 +11,23 @@ def predictNN(X, Theta1, Theta2):
         обучененных параметров модели Theta1, Theta2 трехслойной 
         нейронной сети
     """
-    
+
     m = X.shape[0]
     p = np.zeros([m, 1])
-    
+
     # ====================== Ваш код здесь ======================
     # Инструкция: выполните предсказание метки класса p (от 0 до K) 
     # для обученной трехслойной нейронной сети. При формировании 
     # вектора меток p приведите его к типу uint8, последнее можно 
     # выполнить с использованием команды p = p.astype('uint8')
-    
-    
-    
+
+    g1 = sigmoid(np.dot(X, Theta1.transpose()))
+    g1 = np.concatenate((np.ones((m, 1)), g1), axis=1)
+
+    g2 = sigmoid(np.dot(g1, Theta2.transpose()))
+    p = np.argmax(g2, axis=1)
+    p = np.array([p]).transpose().astype('uint8')
+
     # ============================================================
-    
+
     return p
