@@ -1,15 +1,14 @@
 ## Практическое задание № 6. Кластеризация с использованием алгоритма K-средних
 
+import matplotlib.pyplot as plt
 # Инициализация
 import numpy as np
 import scipy.io as spi
 import scipy.misc as spm
-import matplotlib.pyplot as plt
-
-from findClosestCentroids import findClosestCentroids
 from computeCentroids import computeCentroids
-from runkMeans import runkMeans
+from findClosestCentroids import findClosestCentroids
 from kMeansInitCentroids import kMeansInitCentroids
+from runkMeans import runkMeans
 
 # =============== Часть 1. Поиск ближайших средних ===============
 
@@ -21,7 +20,7 @@ data = spi.loadmat('data.mat')
 X = data['X']
 
 # Выбор начального множества средних
-K = 3 # число средних
+K = 3  # число средних
 initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
 
 # Поиск ближайших средних с учетом их начальных значений
@@ -29,7 +28,7 @@ idx = findClosestCentroids(X, initial_centroids)
 
 print('Номера ближайших средних для первых трех примеров: {:.0f} {:.0f} {:.0f}'.format(idx[0, 0], idx[1, 0], idx[2, 0]))
 
-input('Программа остановлена. Нажмите Enter для продолжения ... \n')
+# input('Программа остановлена. Нажмите Enter для продолжения ... \n')
 
 # ============= Часть 2. Вычисление значений средних =============
 
@@ -41,7 +40,7 @@ centroids = computeCentroids(X, idx, K)
 print('Вычисленные значения средних:')
 print(centroids)
 
-input('Программа остановлена. Нажмите Enter для продолжения ... \n')
+# input('Программа остановлена. Нажмите Enter для продолжения ... \n')
 
 # ====== Часть 3. Кластеризация с использованием K-средних =======
 
@@ -57,7 +56,7 @@ initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
 # Запуск алгоритма K-средних
 centroids, idx = runkMeans(X, initial_centroids, max_iters, True)
 
-input('Программа остановлена. Нажмите Enter для продолжения ... \n')
+# input('Программа остановлена. Нажмите Enter для продолжения ... \n')
 
 # ==== Часть 4. Кластеризация на основе К-средних на пикселях ====
 
@@ -83,7 +82,7 @@ initial_centroids = kMeansInitCentroids(X, K)
 # Запуск алгоритма K-средних
 centroids, idx = runkMeans(X, initial_centroids, max_iters)
 
-input('Программа остановлена. Нажмите Enter для продолжения ... \n')
+# input('Программа остановлена. Нажмите Enter для продолжения ... \n')
 
 # ================= Часть 5. Сжатие изображения ==================
 
@@ -95,7 +94,7 @@ idx = findClosestCentroids(X, centroids).astype('uint8')
 # Формирование сжатого изображения
 X_recovered = np.zeros(X.shape)
 for i in range(X.shape[0]):
-	X_recovered[i, :] = centroids[idx[i, :], :]
+    X_recovered[i, :] = centroids[idx[i, :], :]
 
 X_recovered = X_recovered.reshape(img_size[0], img_size[1], 3)
 
